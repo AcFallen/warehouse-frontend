@@ -1,5 +1,5 @@
 <main class="container">
-  <form action="" class="login__form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login__form">
     <div class="login__header">
       <h1 class="login__title">Iniciar sesión</h1>
       <button
@@ -21,14 +21,32 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Correo electrónico</mat-label>
-      <input matInput placeholder="Ingresa tu nombre" />
+      <input
+        matInput
+        type="email"
+        placeholder="Ingresa tu correo electrónico"
+        formControlName="email"
+      />
+      <mat-error>{{
+        form.controls.email | formError : "Correo electrónico"
+      }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Contraseña</mat-label>
-      <input matInput placeholder="Ingresa tu contraseña" />
+      <input
+        matInput
+        type="password"
+        placeholder="Ingresa tu contraseña"
+        formControlName="password"
+      />
+      <mat-error>{{
+        form.controls.password | formError : "Contraseña"
+      }}</mat-error>
     </mat-form-field>
 
-    <button mat-raised-button color="primary">Iniciar sesión</button>
+    <button mat-raised-button color="primary" type="submit">
+      Iniciar sesión
+    </button>
   </form>
 </main>

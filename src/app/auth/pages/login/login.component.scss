@@ -80,9 +80,29 @@ mat-form-field {
 }
 
 // Button styling
-button[mat-raised-button] {
+button[matButton] {
   height: 48px;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+// Debug styles
+.debug-info {
+  background: var(--mat-sys-surface-container);
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+
+  p {
+    margin: 0.25rem 0;
+    color: var(--mat-sys-on-surface);
+  }
+
+  strong {
+    color: var(--mat-sys-primary);
+  }
 }
