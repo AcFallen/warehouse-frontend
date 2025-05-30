@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { ThemeService } from '../../../shared/services/theme.service';
+import { Router } from '@angular/router';
 import {
   FormControl,
   FormGroup,
@@ -27,11 +28,15 @@ import {
 })
 export class LoginComponent {
   themeService = inject(ThemeService);
+  router = inject(Router);
   hide = signal(true);
 
   form = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [
+    email: new FormControl('rodrigocastillo@gmail.com', [
+      Validators.required,
+      Validators.email,
+    ]),
+    password: new FormControl('123456', [
       Validators.required,
       Validators.minLength(6),
       Validators.maxLength(50),
@@ -59,7 +64,8 @@ export class LoginComponent {
   onSubmit() {
     if (this.form.valid) {
       console.log('Form submitted:', this.form.value);
-      // Aquí implementarías la lógica de autenticación
+      // Simular autenticación exitosa y redirigir
+      this.router.navigate(['/products']);
     } else {
       this.form.markAllAsTouched();
     }
