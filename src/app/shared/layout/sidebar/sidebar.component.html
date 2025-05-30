@@ -1,11 +1,11 @@
-<div class="sidebar-container" [class.sidebar-closed]="!isOpen()">
+<div class="sidebar" [class.sidebar--closed]="!isOpen()">
   <!-- Sidebar Header -->
-  <div class="sidebar-header">
-    <div class="logo-container" [class.logo-collapsed]="!isOpen()">
+  <div class="sidebar__header">
+    <div class="logo" [class.logo--collapsed]="!isOpen()">
       @if (isOpen()) {
-      <h2 class="logo-text">WareHouse</h2>
+      <h2 class="logo__text">WareHouse</h2>
       } @else {
-      <mat-icon class="logo-icon">inventory_2</mat-icon>
+      <mat-icon class="logo__icon">inventory_2</mat-icon>
       }
     </div>
     <button
@@ -19,33 +19,40 @@
   </div>
 
   <!-- Navigation Menu -->
-  <nav class="sidebar-nav">
+  <nav class="sidebar__nav">
     <mat-accordion class="nav-accordion" [multi]="true">
       @for (item of menuItems; track item.label) { @if (item.children &&
       isOpen()) {
       <!-- Expandable menu item -->
       <mat-expansion-panel
         class="nav-expansion-panel"
+        [class.nav-expansion-panel--active]="item.expanded"
         [expanded]="item.expanded"
       >
-        <mat-expansion-panel-header class="nav-header">
-          <mat-panel-title class="nav-title">
-            <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
-            <span class="nav-label">{{ item.label }}</span>
+        <mat-expansion-panel-header
+          class="nav-expansion-panel__header"
+          [class.nav-expansion-panel__header--expanded]="item.expanded"
+        >
+          <mat-panel-title class="nav__title">
+            <mat-icon class="nav__icon">{{ item.icon }}</mat-icon>
+            <span class="nav__label">{{ item.label }}</span>
           </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <div class="submenu-content">
-          @for (child of item.children; track child.label) {
-          <a
-            class="submenu-item"
-            [routerLink]="child.route"
-            routerLinkActive="active"
-          >
-            <mat-icon class="submenu-icon">{{ child.icon }}</mat-icon>
-            <span class="submenu-label">{{ child.label }}</span>
-          </a>
-          }
+        <div class="nav-expansion-panel__content">
+          <div class="submenu__content">
+            @for (child of item.children; track child.label) {
+            <a
+              class="submenu__item"
+              [class.submenu__item--active]="false"
+              [routerLink]="child.route"
+              routerLinkActive="submenu__item--active"
+            >
+              <mat-icon class="submenu__icon">{{ child.icon }}</mat-icon>
+              <span class="submenu__label">{{ child.label }}</span>
+            </a>
+            }
+          </div>
         </div>
       </mat-expansion-panel>
       } @else {
@@ -54,23 +61,24 @@
         @if (item.children && !isOpen()) {
         <!-- Collapsed parent item - show only icon -->
         <button
-          class="nav-item collapsed-parent"
+          class="nav-item nav-item--collapsed-parent"
           [attr.title]="item.label"
           (click)="toggleExpansion(item)"
         >
-          <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
+          <mat-icon class="nav__icon">{{ item.icon }}</mat-icon>
         </button>
         } @else {
         <!-- Simple navigation item -->
         <a
           class="nav-item"
+          [class.nav-item--active]="false"
           [routerLink]="item.route"
-          routerLinkActive="active"
+          routerLinkActive="nav-item--active"
           [attr.title]="!isOpen() ? item.label : null"
         >
-          <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
+          <mat-icon class="nav__icon">{{ item.icon }}</mat-icon>
           @if (isOpen()) {
-          <span class="nav-label">{{ item.label }}</span>
+          <span class="nav__label">{{ item.label }}</span>
           }
         </a>
         }
@@ -80,14 +88,14 @@
   </nav>
 
   <!-- Sidebar Footer -->
-  <div class="sidebar-footer">
+  <div class="sidebar__footer">
     @if (isOpen()) {
-    <div class="user-info">
+    <div class="user__info">
       <mat-icon>account_circle</mat-icon>
       <span>Usuario Admin</span>
     </div>
     } @else {
-    <mat-icon class="user-icon">account_circle</mat-icon>
+    <mat-icon class="user__icon">account_circle</mat-icon>
     }
   </div>
 </div>

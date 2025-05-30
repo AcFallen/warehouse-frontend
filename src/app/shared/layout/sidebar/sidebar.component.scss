@@ -5,7 +5,7 @@ $nav-item-height: 48px;
 $submenu-item-height: 40px;
 $active-indicator-width: 4px;
 
-.sidebar-container {
+.sidebar {
   height: 100vh;
   width: 100%;
   background: var(--mat-sys-surface-container);
@@ -15,46 +15,122 @@ $active-indicator-width: 4px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
 
-  &.sidebar-closed {
+  &--closed {
     width: 100%;
+
+    .nav__label,
+    .submenu__label {
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .nav-accordion {
+      .mat-expansion-panel {
+        display: none;
+      }
+    }
+  }
+
+  // Animation for text elements when open
+  .nav__label,
+  .submenu__label {
+    opacity: 1;
+    transition: opacity 0.3s ease 0.1s;
+  }
+
+  // Responsive
+  @media (max-width: 768px) {
+    position: fixed;
+    z-index: 1000;
+    box-shadow: var(--mat-sys-elevation-3);
+    width: $sidebar-width;
+    border-right: 1px solid var(--mat-sys-outline-variant);
+
+    &--closed {
+      transform: translateX(-100%);
+      width: $sidebar-width;
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 16px;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+    min-height: 64px;
+    flex-shrink: 0;
+  }
+
+  &__nav {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 8px 0;
+    max-height: calc(100vh - 128px);
+
+    // Custom scrollbar
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--mat-sys-outline-variant);
+      border-radius: 2px;
+
+      &:hover {
+        background: var(--mat-sys-outline);
+      }
+    }
+  }
+
+  &__footer {
+    padding: 12px 16px 16px 16px;
+    background-color: var(--mat-sys-surface-container);
+    flex-shrink: 0;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 16px;
+      right: 16px;
+      height: 1px;
+      background: var(--mat-sys-outline-variant);
+      opacity: 0.5;
+    }
   }
 }
 
-/* Header */
-.sidebar-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0px 16px;
-  border-bottom: 1px solid var(--mat-sys-outline-variant);
-  min-height: 64px;
-  flex-shrink: 0;
-}
-
-.logo-container {
+.logo {
   display: flex;
   align-items: center;
   gap: 12px;
   transition: all 0.3s ease;
 
-  &.logo-collapsed {
+  &--collapsed {
     justify-content: center;
   }
-}
 
-.logo-text {
-  margin: 0;
-  font-size: 12px rem;
-  font-weight: 600;
-  color: var(--mat-sys-primary);
-  white-space: nowrap;
-}
+  &__text {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--mat-sys-primary);
+    white-space: nowrap;
+  }
 
-.logo-icon {
-  color: var(--mat-sys-primary);
-  font-size: 2rem;
-  width: 2rem;
-  height: 2rem;
+  &__icon {
+    color: var(--mat-sys-primary);
+    font-size: 2rem;
+    width: 2rem;
+    height: 2rem;
+  }
 }
 
 .toggle-button {
@@ -75,7 +151,7 @@ $active-indicator-width: 4px;
   padding: 8px 0;
   max-height: calc(100vh - 128px); // Altura total menos header y footer
 
-  // Scrollbar más sutil
+  // Custom scrollbar
   &::-webkit-scrollbar {
     width: 4px;
   }
@@ -96,6 +172,8 @@ $active-indicator-width: 4px;
 
 .nav-accordion {
   box-shadow: none;
+  height: auto;
+  min-height: auto;
 
   .mat-expansion-panel {
     box-shadow: none;
@@ -106,6 +184,16 @@ $active-indicator-width: 4px;
     &::before {
       display: none;
     }
+
+    &:first-of-type {
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+    }
+
+    &:last-of-type {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
   }
 }
 
@@ -114,7 +202,7 @@ $active-indicator-width: 4px;
   border-radius: 0 !important;
   position: relative;
 
-  &.active-module::before {
+  &--active::before {
     content: "";
     position: absolute;
     left: 0;
@@ -125,7 +213,7 @@ $active-indicator-width: 4px;
     border-radius: 0 2px 2px 0;
   }
 
-  .mat-expansion-panel-header {
+  &__header {
     padding: 0 16px;
     height: $nav-item-height;
     border-radius: 0 24px 24px 0;
@@ -136,17 +224,17 @@ $active-indicator-width: 4px;
       background-color: var(--mat-sys-surface-variant);
     }
 
-    &.mat-expanded {
+    &--expanded {
       background-color: var(--mat-sys-primary-container);
       color: var(--mat-sys-on-primary-container);
 
-      .nav-icon {
+      .nav__icon {
         color: var(--mat-sys-primary);
       }
     }
   }
 
-  .mat-expansion-panel-content {
+  &__content {
     .mat-expansion-panel-body {
       padding: 0;
       background: transparent;
@@ -154,29 +242,31 @@ $active-indicator-width: 4px;
   }
 }
 
-.nav-title {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  font-weight: 500;
-  color: var(--mat-sys-on-surface);
-  margin: 0;
-}
+.nav {
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-weight: 500;
+    color: var(--mat-sys-on-surface);
+    margin: 0;
+  }
 
-.nav-icon {
-  color: var(--mat-sys-on-surface-variant);
-  font-size: 24px;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.2s ease;
-}
+  &__icon {
+    color: var(--mat-sys-on-surface-variant);
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+  }
 
-.nav-label {
-  font-size: 0.875rem;
-  font-weight: 500;
+  &__label {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
 }
 
 /* Navigation Items */
@@ -184,7 +274,7 @@ $active-indicator-width: 4px;
   margin: 2px 8px 2px 0;
   position: relative;
 
-  &.active-item::before {
+  &--active::before {
     content: "";
     position: absolute;
     left: -8px;
@@ -215,106 +305,105 @@ $active-indicator-width: 4px;
   &:hover {
     background-color: var(--mat-sys-surface-variant);
 
-    .nav-icon {
+    .nav__icon {
       color: var(--mat-sys-primary);
     }
   }
 
-  &.active {
+  &--active {
     background-color: var(--mat-sys-secondary-container);
     color: var(--mat-sys-on-secondary-container);
 
-    .nav-icon {
+    .nav__icon {
       color: var(--mat-sys-on-secondary-container);
     }
   }
 
-  &.collapsed-parent {
+  &--collapsed-parent {
     justify-content: center;
     padding: 12px;
   }
 }
 
 /* Submenu */
-.submenu-content {
-  background: transparent;
-  margin: 0;
-  padding: 4px 0 8px 0;
-  border-left: 2px solid var(--mat-sys-outline-variant);
-  margin-left: 20px;
-  position: relative;
+.submenu {
+  &__content {
+    background: transparent;
+    margin: 0;
+    padding: 4px 0 8px 0;
+    border-left: 2px solid var(--mat-sys-outline-variant);
+    margin-left: 20px;
+    position: relative;
 
-  &::before {
-    content: "";
-    position: absolute;
-    left: -2px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: var(--mat-sys-primary-container);
-    opacity: 0.3;
-  }
-}
-
-.submenu-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 16px 8px 24px;
-  height: $submenu-item-height;
-  text-decoration: none;
-  color: var(--mat-sys-on-surface-variant);
-  font-size: 0.875rem;
-  transition: all 0.2s ease;
-  border-radius: 0 20px 20px 0;
-  margin: 1px 8px 1px 0;
-  position: relative;
-
-  &:hover {
-    background-color: var(--mat-sys-surface-variant);
-    color: var(--mat-sys-on-surface);
-
-    .submenu-icon {
-      color: var(--mat-sys-primary);
+    &::before {
+      content: "";
+      position: absolute;
+      left: -2px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--mat-sys-primary-container);
+      opacity: 0.3;
     }
   }
 
-  &.active {
-    background-color: var(--mat-sys-primary-container);
-    color: var(--mat-sys-on-primary-container);
-    font-weight: 500;
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px 8px 24px;
+    height: $submenu-item-height;
+    text-decoration: none;
+    color: var(--mat-sys-on-surface-variant);
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    border-radius: 0 20px 20px 0;
+    margin: 1px 8px 1px 0;
+    position: relative;
 
-    .submenu-icon {
-      color: var(--mat-sys-primary);
+    &:hover {
+      background-color: var(--mat-sys-surface-variant);
+      color: var(--mat-sys-on-surface);
+
+      .submenu__icon {
+        color: var(--mat-sys-primary);
+      }
+    }
+
+    &--active {
+      background-color: var(--mat-sys-primary-container);
+      color: var(--mat-sys-on-primary-container);
+      font-weight: 500;
+
+      .submenu__icon {
+        color: var(--mat-sys-primary);
+      }
     }
   }
-}
 
-.submenu-icon {
-  color: var(--mat-sys-on-surface-variant);
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.2s ease;
-}
+  &__icon {
+    color: var(--mat-sys-on-surface-variant);
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+  }
 
-.submenu-label {
-  font-size: 0.875rem;
+  &__label {
+    font-size: 0.875rem;
+  }
 }
 
 /* Footer - Completamente integrado */
 .sidebar-footer {
   padding: 12px 16px 16px 16px;
-  background-color: var(
-    --mat-sys-surface-container
-  ); // Mismo fondo que el sidebar
+  background-color: var(--mat-sys-surface-container);
   flex-shrink: 0;
   position: relative;
 
-  // Línea sutil en lugar de borde completo
   &::before {
     content: "";
     position: absolute;
@@ -327,89 +416,49 @@ $active-indicator-width: 4px;
   }
 }
 
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: var(--mat-sys-on-surface);
-  padding: 8px 12px;
-  border-radius: 12px;
-  transition: all 0.2s ease;
-  cursor: pointer;
+.user {
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--mat-sys-on-surface);
+    padding: 8px 12px;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    cursor: pointer;
 
-  &:hover {
-    background-color: var(--mat-sys-surface-variant);
+    &:hover {
+      background-color: var(--mat-sys-surface-variant);
+    }
+
+    mat-icon {
+      color: var(--mat-sys-primary);
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+
+    span {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
   }
 
-  mat-icon {
+  &__icon {
     color: var(--mat-sys-primary);
+    display: flex;
+    justify-content: center;
+    width: 100%;
     font-size: 24px;
     width: 24px;
     height: 24px;
-  }
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    cursor: pointer;
 
-  span {
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
-}
-
-.user-icon {
-  color: var(--mat-sys-primary);
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  font-size: 24px;
-  width: 24px;
-  height: 24px;
-  padding: 8px;
-  border-radius: 50%;
-  transition: all 0.2s ease;
-  cursor: pointer;
-
-  &:hover {
-    background-color: var(--mat-sys-surface-variant);
-  }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .sidebar-container {
-    position: fixed;
-    z-index: 1000;
-    box-shadow: var(--mat-sys-elevation-3);
-    width: $sidebar-width;
-    border-right: 1px solid var(--mat-sys-outline-variant);
-
-    &.sidebar-closed {
-      transform: translateX(-100%);
-      width: $sidebar-width;
-    }
-  }
-}
-
-/* Animation for text elements */
-.sidebar-container.sidebar-closed {
-  .nav-label,
-  .submenu-label {
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-}
-
-.sidebar-container {
-  .nav-label,
-  .submenu-label {
-    opacity: 1;
-    transition: opacity 0.3s ease 0.1s;
-  }
-}
-
-/* Hide expansion panels when collapsed */
-.sidebar-closed {
-  .nav-accordion {
-    .mat-expansion-panel {
-      display: none;
+    &:hover {
+      background-color: var(--mat-sys-surface-variant);
     }
   }
 }
@@ -425,22 +474,4 @@ $active-indicator-width: 4px;
 
 .mat-expansion-indicator {
   display: none !important;
-}
-
-/* Mejoras adicionales */
-.nav-accordion {
-  height: auto;
-  min-height: auto;
-}
-
-.mat-expansion-panel {
-  &:first-of-type {
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-  }
-
-  &:last-of-type {
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-  }
 }
