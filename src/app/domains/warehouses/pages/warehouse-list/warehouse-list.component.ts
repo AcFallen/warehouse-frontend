@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-warehouse-list',
   imports: [],
   templateUrl: './warehouse-list.component.html',
-  styleUrl: './warehouse-list.component.css'
 })
 export class WarehouseListComponent {
 
