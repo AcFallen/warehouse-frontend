@@ -12,6 +12,7 @@
   width: 100%;
   background: var(--mat-sys-surface);
   overflow: hidden;
+  position: relative;
 }
 
 .sidenav {
@@ -19,6 +20,13 @@
   border-right: none;
   box-shadow: none;
   overflow: hidden;
+
+  // En modo 'over' (móvil), agregar sombra para el overlay
+  &.mat-sidenav-over {
+    box-shadow: var(--mat-sys-elevation-3);
+    border-right: 1px solid var(--mat-sys-outline-variant);
+    z-index: 1000;
+  }
 }
 
 .main-content {
@@ -93,6 +101,17 @@
 
   .menu-button {
     margin-right: 8px;
+  }
+
+  // Asegurar que el backdrop funcione correctamente
+  .mat-sidenav-backdrop {
+    z-index: 999;
+  }
+
+  // El contenido principal no debe interferir con el overlay
+  .main-content {
+    position: relative;
+    z-index: 1;
   }
 }
 

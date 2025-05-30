@@ -3,8 +3,9 @@
     <!-- Sidebar -->
     <mat-sidenav
       #sidenav
-      mode="side"
+      [mode]="sidenavMode()"
       [opened]="sidebarOpen()"
+      (backdropClick)="sidebarOpen.set(false)"
       class="sidenav"
       fixedInViewport="true"
       fixedTopGap="0"

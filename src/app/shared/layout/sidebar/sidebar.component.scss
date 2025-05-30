@@ -40,16 +40,10 @@ $active-indicator-width: 4px;
 
   // Responsive
   @media (max-width: 768px) {
-    position: fixed;
-    z-index: 1000;
-    box-shadow: var(--mat-sys-elevation-3);
-    width: $sidebar-width;
-    border-right: 1px solid var(--mat-sys-outline-variant);
-
-    &--closed {
-      transform: translateX(-100%);
-      width: $sidebar-width;
-    }
+    // El mat-sidenav en modo 'over' maneja el positioning automáticamente
+    // Solo necesitamos ajustar el ancho si es necesario
+    width: 100%;
+    max-width: 280px;
   }
 
   &__header {
