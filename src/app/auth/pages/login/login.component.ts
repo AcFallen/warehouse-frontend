@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -27,6 +27,7 @@ import {
 })
 export class LoginComponent {
   themeService = inject(ThemeService);
+  hide = signal(true);
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -48,6 +49,11 @@ export class LoginComponent {
 
   toggleTheme() {
     this.themeService.toggleTheme();
+  }
+
+  clickEvent(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
   }
 
   onSubmit() {

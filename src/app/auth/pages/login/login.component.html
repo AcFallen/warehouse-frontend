@@ -26,16 +26,14 @@
         type="email"
         placeholder="Ingresa tu correo electrónico"
         formControlName="email"
+        autocomplete="email"
       />
+      <mat-icon matPrefix>email</mat-icon>
       @if (email?.invalid && (email?.dirty || email?.touched)) {
-        <mat-error>
-          @if (email?.hasError('required')) {
-            El correo electrónico es requerido
-          }
-          @if (email?.hasError('email')) {
-            Ingresa un correo electrónico válido
-          }
-        </mat-error>
+      <mat-error>
+        @if (email?.hasError('required')) { El correo electrónico es requerido }
+        @if (email?.hasError('email')) { Ingresa un correo electrónico válido }
+      </mat-error>
       }
     </mat-form-field>
 
@@ -43,28 +41,35 @@
       <mat-label>Contraseña</mat-label>
       <input
         matInput
-        type="password"
+        [type]="hide() ? 'password' : 'text'"
         placeholder="Ingresa tu contraseña"
         formControlName="password"
+        autocomplete="current-password"
       />
+      <mat-icon matPrefix>lock</mat-icon>
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="clickEvent($event)"
+        [attr.aria-label]="hide() ? 'Mostrar contraseña' : 'Ocultar contraseña'"
+        [attr.aria-pressed]="hide()"
+      >
+        <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
       @if (password?.invalid && (password?.dirty || password?.touched)) {
-        <mat-error>
-          @if (password?.hasError('required')) {
-            La contraseña es requerida
-          }
-          @if (password?.hasError('minlength')) {
-            La contraseña debe tener al menos 6 caracteres
-          }
-          @if (password?.hasError('maxlength')) {
-            La contraseña no puede tener más de 50 caracteres
-          }
-        </mat-error>
+      <mat-error>
+        @if (password?.hasError('required')) { La contraseña es requerida } @if
+        (password?.hasError('minlength')) { La contraseña debe tener al menos 6
+        caracteres } @if (password?.hasError('maxlength')) { La contraseña no
+        puede tener más de 50 caracteres }
+      </mat-error>
       }
     </mat-form-field>
 
-    <button 
-      mat-raised-button 
-      color="primary" 
+    <button
+      mat-raised-button
+      color="primary"
       type="submit"
       [disabled]="form.invalid"
     >
