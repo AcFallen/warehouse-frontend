@@ -1,0 +1,66 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+app-categories-table {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  // Asegurar que el componente tabla no cause overflow
+  ::ng-deep .table-container {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  // El wrapper manejará el scroll horizontal
+  ::ng-deep .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    // Prevenir que el scroll se propague
+    overscroll-behavior-x: contain;
+  }
+
+  // Responsive adjustments
+  @media (max-width: 768px) {
+    ::ng-deep .table-container {
+      padding: 10px;
+    }
+
+    ::ng-deep .table-header {
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+
+      button {
+        width: auto;
+        min-width: 150px;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    ::ng-deep .table-container {
+      padding: 8px;
+    }
+
+    ::ng-deep .table-header {
+      h2 {
+        font-size: 1.1rem;
+      }
+
+      button {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+    }
+  }
+}

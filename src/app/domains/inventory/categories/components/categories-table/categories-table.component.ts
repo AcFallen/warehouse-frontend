@@ -21,8 +21,6 @@ import { CategoriesService, Category } from '../../services/categories.service';
   templateUrl: './categories-table.component.html',
   styleUrls: ['./categories-table.component.scss'],
 })
-
-
 export class CategoriesTableComponent implements OnInit {
   dataSource: Category[] = [];
   displayedColumns: string[] = [
@@ -84,5 +82,9 @@ export class CategoriesTableComponent implements OnInit {
       hour: '2-digit',
       minute: '2-digit',
     });
+  }
+
+  getRowNumber(index: number): number {
+    return (this.currentPage - 1) * this.pageSize + index + 1;
   }
 }
