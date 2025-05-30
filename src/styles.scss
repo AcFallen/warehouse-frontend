@@ -5,9 +5,9 @@ html {
   color-scheme: light;
   @include mat.theme(
     (
-      color: mat.$blue-palette,
+      color: mat.$rose-palette,
       typography: Roboto,
-      density: 0
+      density: 0,
     )
   );
 }
