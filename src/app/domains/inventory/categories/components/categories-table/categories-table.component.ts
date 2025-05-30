@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,8 +22,18 @@ import { CategoriesService, Category } from '../../services/categories.service';
   styleUrls: ['./categories-table.component.scss'],
 })
 export class CategoriesTableComponent implements OnInit {
-  dataSource: Category[] = [];
-  displayedColumns: string[] = [
+  private readonly categoriesService = inject(CategoriesService);
+
+  // Signals para estado reactivo
+  dataSource = signal<Category[]>([]);
+  totalItems = signal(0);
+  currentPage = signal(1);
+  pageSize = signal(10);
+  loading = signal(false);
+  error = signal<string | null>(null);
+
+  // Computed properties
+  displayedColumns = [
     'id',
     'name',
     'description',
@@ -31,45 +41,44 @@ export class CategoriesTableComponent implements OnInit {
     'createdAt',
     'actions',
   ];
-  totalItems = 0;
-  pageSize = 10;
-  currentPage = 1;
-  loading = false;
-  error: string | null = null;
 
-  constructor(private categoriesService: CategoriesService) {}
+  // Computed para el número de fila
+  getRowNumber = computed(() => {
+    return (index: number) =>
+      (this.currentPage() - 1) * this.pageSize() + index + 1;
+  });
 
   ngOnInit() {
     this.loadCategories();
   }
 
   loadCategories() {
-    this.loading = true;
-    this.error = null;
+    this.loading.set(true);
+    this.error.set(null);
 
     this.categoriesService
-      .getCategories(this.currentPage, this.pageSize)
+      .getCategories(this.currentPage(), this.pageSize())
       .subscribe({
         next: (response) => {
           if (response.success) {
-            this.dataSource = response.data;
-            this.totalItems = response.pagination.total;
+            this.dataSource.set(response.data);
+            this.totalItems.set(response.pagination.total);
           } else {
-            this.error = response.message || 'Error desconocido';
+            this.error.set(response.message || 'Error desconocido');
           }
-          this.loading = false;
+          this.loading.set(false);
         },
         error: (error) => {
           console.error('Error loading categories:', error);
-          this.error = 'Error de conexión con el servidor';
-          this.loading = false;
+          this.error.set('Error de conexión con el servidor');
+          this.loading.set(false);
         },
       });
   }
 
   onPageChange(event: any) {
-    this.currentPage = event.pageIndex + 1;
-    this.pageSize = event.pageSize;
+    this.currentPage.set(event.pageIndex + 1);
+    this.pageSize.set(event.pageSize);
     this.loadCategories();
   }
 
@@ -82,9 +91,5 @@ export class CategoriesTableComponent implements OnInit {
       hour: '2-digit',
       minute: '2-digit',
     });
-  }
-
-  getRowNumber(index: number): number {
-    return (this.currentPage - 1) * this.pageSize + index + 1;
   }
 }
