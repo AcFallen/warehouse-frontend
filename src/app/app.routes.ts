@@ -1,10 +1,11 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './auth/pages/login/login.component';
 import { MainLayoutComponent } from './shared/layout/main-layout/main-layout.component';
-import { ProductListComponent } from './domains/products/pages/product-list/product-list.component';
-import { DashboardComponent } from './domains/inventory/pages/dashboard/dashboard.component';
+import { DashboardComponent } from './domains/dashboard/dashboard.component';
 import { WarehouseListComponent } from './domains/warehouses/pages/warehouse-list/warehouse-list.component';
 import { InventoryReportsComponent } from './domains/reports/pages/inventory-reports/inventory-reports.component';
+import { ProductListComponent } from './domains/inventory/products/pages/product-list/product-list.component';
+import { CategoryListComponent } from './domains/inventory/categories/category-list/category-list.component';
 
 export const routes: Routes = [
   {
@@ -30,7 +31,7 @@ export const routes: Routes = [
       },
       {
         path: 'categories',
-        component: ProductListComponent, // Placeholder
+        component: CategoryListComponent,
       },
       {
         path: 'movements',
