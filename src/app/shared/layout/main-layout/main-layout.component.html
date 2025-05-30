@@ -1,0 +1,111 @@
+<div class="layout-container">
+  <mat-sidenav-container class="sidenav-container">
+    <!-- Sidebar -->
+    <mat-sidenav
+      #sidenav
+      mode="side"
+      [opened]="sidebarOpen()"
+      class="sidenav"
+      fixedInViewport="true"
+      fixedTopGap="0"
+    >
+      <app-sidebar
+        [isOpen]="sidebarOpen()"
+        (toggleSidebar)="toggleSidebar()"
+      ></app-sidebar>
+    </mat-sidenav>
+
+    <!-- Main Content -->
+    <mat-sidenav-content class="main-content">
+      <!-- Top Toolbar -->
+      <mat-toolbar class="toolbar" color="primary">
+        <button
+          mat-icon-button
+          (click)="toggleSidebar()"
+          class="menu-button"
+          [attr.aria-label]="sidebarOpen() ? 'Cerrar menú' : 'Abrir menú'"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <span class="toolbar-title">Sistema de Inventario</span>
+
+        <div class="toolbar-spacer"></div>
+
+        <!-- Toolbar Actions -->
+        <div class="toolbar-actions">
+          <button
+            mat-icon-button
+            (click)="toggleTheme()"
+            [attr.aria-label]="
+              themeService.isDark()
+                ? 'Cambiar a modo claro'
+                : 'Cambiar a modo oscuro'
+            "
+          >
+            <mat-icon>
+              @if (themeService.isDark()) { light_mode } @else { dark_mode }
+            </mat-icon>
+          </button>
+
+          <button mat-icon-button [matMenuTriggerFor]="notificationMenu">
+            <mat-icon
+              matBadge="3"
+              matBadgeColor="warn"
+              aria-hidden="false"
+              [attr.aria-label]="'Notificaciones: 3 nuevas'"
+            >
+              notifications
+            </mat-icon>
+          </button>
+
+          <button mat-icon-button [matMenuTriggerFor]="userMenu">
+            <mat-icon>account_circle</mat-icon>
+          </button>
+        </div>
+      </mat-toolbar>
+
+      <!-- Page Content -->
+      <main class="page-content">
+        <router-outlet></router-outlet>
+      </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
+<!-- Notification Menu -->
+<mat-menu #notificationMenu="matMenu">
+  <button mat-menu-item>
+    <mat-icon>inventory</mat-icon>
+    <span>Stock bajo en Producto A</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>local_shipping</mat-icon>
+    <span>Nueva orden de compra</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>warning</mat-icon>
+    <span>Producto próximo a vencer</span>
+  </button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item>
+    <span>Ver todas las notificaciones</span>
+  </button>
+</mat-menu>
+
+<!-- User Menu -->
+<mat-menu #userMenu="matMenu">
+  <button mat-menu-item>
+    <mat-icon>person</mat-icon>
+    <span>Mi Perfil</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>settings</mat-icon>
+    <span>Configuración</span>
+  </button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item>
+    <mat-icon>logout</mat-icon>
+    <span>Cerrar Sesión</span>
+  </button>
+</mat-menu>

@@ -64,8 +64,8 @@ export class LoginComponent {
   onSubmit() {
     if (this.form.valid) {
       console.log('Form submitted:', this.form.value);
-      // Simular autenticación exitosa y redirigir
-      this.router.navigate(['/products']);
+      // Simular autenticación exitosa y redirigir al dashboard
+      this.router.navigate(['/dashboard']);
     } else {
       this.form.markAllAsTouched();
     }
