@@ -5,6 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { CategoriesService, Category } from '../../services/categories.service';
 
 @Component({
@@ -17,6 +19,8 @@ import { CategoriesService, Category } from '../../services/categories.service';
     MatPaginatorModule,
     MatIconModule,
     MatChipsModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   templateUrl: './categories-table.component.html',
   styleUrls: ['./categories-table.component.scss'],
@@ -25,12 +29,35 @@ export class CategoriesTableComponent implements OnInit {
   private readonly categoriesService = inject(CategoriesService);
 
   // Signals para estado reactivo
-  dataSource = signal<Category[]>([]);
+  private rawData = signal<Category[]>([]); // Datos sin filtrar del servidor
   totalItems = signal(0);
   currentPage = signal(1);
   pageSize = signal(10);
   loading = signal(false);
   error = signal<string | null>(null);
+
+  // Signal para el filtro
+  filterValue = signal<string>('');
+
+  // Computed property para datos filtrados
+  dataSource = computed(() => {
+    const data = this.rawData();
+    const filter = this.filterValue().toLowerCase().trim();
+
+    if (!filter) {
+      return data;
+    }
+
+    return data.filter(
+      (category) =>
+        category.name.toLowerCase().includes(filter) ||
+        category.description.toLowerCase().includes(filter) ||
+        (category.isActive ? 'activo' : 'inactivo').includes(filter)
+    );
+  });
+
+  // Computed para total de items filtrados
+  filteredTotalItems = computed(() => this.dataSource().length);
 
   // Computed properties
   displayedColumns = [
@@ -61,7 +88,7 @@ export class CategoriesTableComponent implements OnInit {
       .subscribe({
         next: (response) => {
           if (response.success) {
-            this.dataSource.set(response.data);
+            this.rawData.set(response.data); // Guardamos datos sin filtrar
             this.totalItems.set(response.pagination.total);
           } else {
             this.error.set(response.message || 'Error desconocido');
@@ -74,6 +101,21 @@ export class CategoriesTableComponent implements OnInit {
           this.loading.set(false);
         },
       });
+  }
+
+  // Método para aplicar filtro
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.filterValue.set(filterValue);
+
+    // Reset pagination cuando se filtra
+    this.currentPage.set(1);
+  }
+
+  // Método para limpiar filtro
+  clearFilter() {
+    this.filterValue.set('');
+    this.currentPage.set(1);
   }
 
   onPageChange(event: any) {

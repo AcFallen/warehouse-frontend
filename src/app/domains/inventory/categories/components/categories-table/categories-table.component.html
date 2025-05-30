@@ -7,6 +7,42 @@
     </button>
   </div>
 
+  <!-- Filtros Section -->
+  <div class="filters-section">
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Buscar categorías</mat-label>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Buscar por nombre, descripción o estado..."
+        [value]="filterValue()"
+        #filterInput
+      />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    @if (filterValue()) {
+    <button
+      mat-icon-button
+      color="primary"
+      (click)="clearFilter()"
+      title="Limpiar filtro"
+    >
+      <mat-icon>clear</mat-icon>
+    </button>
+    }
+  </div>
+
+  <!-- Results Info -->
+  @if (filterValue()) {
+  <div class="results-info">
+    <span class="results-text">
+      Mostrando {{ filteredTotalItems() }} de {{ totalItems() }} categorías
+      <mat-icon class="filter-icon">filter_list</mat-icon>
+    </span>
+  </div>
+  }
+
   <!-- Wrapper para controlar el scroll horizontal -->
   <div class="table-wrapper">
     <table mat-table [dataSource]="dataSource()" class="mat-elevation-z8">
@@ -77,6 +113,22 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+
+    <!-- No results message -->
+    @if (!loading() && !error() && dataSource().length === 0 && filterValue()) {
+    <div class="no-results">
+      <mat-icon>search_off</mat-icon>
+      <p>
+        No se encontraron categorías que coincidan con "<strong>{{
+          filterValue()
+        }}</strong
+        >"
+      </p>
+      <button mat-button color="primary" (click)="clearFilter()">
+        Limpiar filtro
+      </button>
+    </div>
+    }
   </div>
 
   <!-- Paginación -->
