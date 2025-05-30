@@ -5,7 +5,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { ThemeService } from '../../../shared/services/theme.service';
-import { FormErrorPipe } from '../../../shared/pipes/form-error.pipe';
 import {
   FormControl,
   FormGroup,
@@ -22,7 +21,6 @@ import {
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
-    FormErrorPipe,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -35,8 +33,18 @@ export class LoginComponent {
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(6),
+      Validators.maxLength(50),
     ]),
   });
+
+  // Getters para acceso fácil a los controles
+  get email() {
+    return this.form.get('email');
+  }
+
+  get password() {
+    return this.form.get('password');
+  }
 
   toggleTheme() {
     this.themeService.toggleTheme();
@@ -45,6 +53,7 @@ export class LoginComponent {
   onSubmit() {
     if (this.form.valid) {
       console.log('Form submitted:', this.form.value);
+      // Aquí implementarías la lógica de autenticación
     } else {
       this.form.markAllAsTouched();
     }

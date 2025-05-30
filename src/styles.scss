@@ -5,7 +5,7 @@ html {
   color-scheme: light;
   @include mat.theme(
     (
-      color: mat.$spring-green-palette,
+      color: mat.$magenta-palette,
       typography: Roboto,
       density: 0
     )
