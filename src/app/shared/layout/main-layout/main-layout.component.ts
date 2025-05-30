@@ -54,13 +54,6 @@ export class MainLayoutComponent {
       const mobileState = this.isMobile();
       const isMobileNow = mobileState?.matches ?? false;
 
-      console.log(
-        'Effect triggered - wasMobile:',
-        this.wasMobile,
-        'isMobileNow:',
-        isMobileNow
-      );
-
       // En la primera ejecución, establecer el estado inicial
       if (this.wasMobile === undefined) {
         this.sidebarOpen.set(!isMobileNow); // Abierto en desktop, cerrado en móvil
@@ -70,7 +63,6 @@ export class MainLayoutComponent {
 
       // Si cambió de desktop a móvil, cerrar el sidebar
       if (!this.wasMobile && isMobileNow && this.sidebarOpen()) {
-        console.log('Auto-closing sidebar due to mobile transition');
         this.sidebarOpen.set(false);
       }
 
@@ -79,11 +71,15 @@ export class MainLayoutComponent {
   }
 
   toggleSidebar() {
-    console.log('toggleSidebar called, current state:', this.sidebarOpen());
-    console.log('Is mobile:', this.isMobile()?.matches);
-    console.log('Sidenav mode:', this.sidenavMode());
-    this.sidebarOpen.set(!this.sidebarOpen());
-    console.log('New state:', this.sidebarOpen());
+    const newState = !this.sidebarOpen();
+    this.sidebarOpen.set(newState);
+  }
+
+  // Método público para cerrar el sidebar (usado desde el sidebar)
+  closeSidebar() {
+    if (this.isMobile()?.matches) {
+      this.sidebarOpen.set(false);
+    }
   }
 
   toggleTheme() {

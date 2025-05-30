@@ -5,6 +5,4 @@ import { Component } from '@angular/core';
   imports: [],
   templateUrl: './dashboard.component.html',
 })
-export class DashboardComponent {
-
-}
+export class DashboardComponent {}

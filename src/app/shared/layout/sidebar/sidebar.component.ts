@@ -32,6 +32,7 @@ interface MenuItem {
 export class SidebarComponent {
   isOpen = input<boolean>(true);
   toggleSidebar = output<void>();
+  closeSidebar = output<void>();
 
   menuItems: MenuItem[] = [
     {
@@ -158,6 +159,11 @@ export class SidebarComponent {
 
   onToggleSidebar() {
     this.toggleSidebar.emit();
+  }
+
+  onNavigate() {
+    // En móvil, cerrar el sidebar al navegar usando el output específico
+    this.closeSidebar.emit();
   }
 
   toggleExpansion(item: MenuItem) {

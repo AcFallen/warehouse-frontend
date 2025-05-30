@@ -295,6 +295,9 @@ $active-indicator-width: 4px;
   background: transparent;
   width: 100%;
   text-align: left;
+  // Evitar flash durante navegación
+  will-change: background-color;
+  transform: translateZ(0); // Forzar aceleración de hardware
 
   &:hover {
     background-color: var(--mat-sys-surface-variant);
@@ -354,6 +357,9 @@ $active-indicator-width: 4px;
     border-radius: 0 20px 20px 0;
     margin: 1px 8px 1px 0;
     position: relative;
+    // Evitar flash durante navegación
+    will-change: background-color;
+    transform: translateZ(0); // Forzar aceleración de hardware
 
     &:hover {
       background-color: var(--mat-sys-surface-variant);

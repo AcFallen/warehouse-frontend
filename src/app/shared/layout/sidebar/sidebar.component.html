@@ -47,6 +47,8 @@
               [class.submenu__item--active]="false"
               [routerLink]="child.route"
               routerLinkActive="submenu__item--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="onNavigate()"
             >
               <mat-icon class="submenu__icon">{{ child.icon }}</mat-icon>
               <span class="submenu__label">{{ child.label }}</span>
@@ -74,7 +76,9 @@
           [class.nav-item--active]="false"
           [routerLink]="item.route"
           routerLinkActive="nav-item--active"
+          [routerLinkActiveOptions]="{ exact: true }"
           [attr.title]="!isOpen() ? item.label : null"
+          (click)="onNavigate()"
         >
           <mat-icon class="nav__icon">{{ item.icon }}</mat-icon>
           @if (isOpen()) {
