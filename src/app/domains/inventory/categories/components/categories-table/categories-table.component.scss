@@ -73,6 +73,7 @@
   text-align: center;
   padding: 40px;
   color: #666;
+  background-color: var(--mat-sys-surface);
 
   mat-icon {
     font-size: 48px;
@@ -120,10 +121,6 @@
 table {
   width: 100%;
   min-width: 800px;
-}
-
-.mat-mdc-header-cell {
-  font-weight: bold;
 }
 
 // Estilos mejorados para chips de estado
@@ -213,13 +210,6 @@ td[mat-cell]:last-child {
     }
   }
 
-  .results-info {
-    .results-text {
-      font-size: 13px;
-      justify-content: center;
-    }
-  }
-
   .table-wrapper {
     position: relative;
   }
@@ -257,14 +247,6 @@ td[mat-cell]:last-child {
       .mat-mdc-form-field-infix {
         font-size: 14px;
       }
-    }
-  }
-
-  .results-info {
-    padding: 6px 12px;
-
-    .results-text {
-      font-size: 12px;
     }
   }
 
