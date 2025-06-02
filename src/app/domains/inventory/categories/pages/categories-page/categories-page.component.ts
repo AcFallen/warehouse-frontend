@@ -1,4 +1,5 @@
 import { Component, computed, inject, signal, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { CategoriesService } from '../../services/categories.service';
 import { Category } from '../../models/category.model';
 import {
@@ -6,6 +7,11 @@ import {
   FilterEvent,
   ActionEvent,
 } from '../../components/categories-table/categories-table.component';
+import {
+  CategoryFormModalComponent,
+  CategoryFormData,
+  CategoryFormResult,
+} from '../../components/category-form-modal/category-form-modal.component';
 import { PageEvent } from '@angular/material/paginator';
 
 @Component({
@@ -16,6 +22,7 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class CategoriesPageComponent implements OnInit {
   private readonly categoriesService = inject(CategoriesService);
+  private readonly dialog = inject(MatDialog);
 
   // Signals para estado reactivo
   private rawData = signal<Category[]>([]); // Datos sin filtrar del servidor
@@ -116,17 +123,70 @@ export class CategoriesPageComponent implements OnInit {
 
   // Action handlers
   private handleAddCategory() {
-    console.log('Add category action triggered');
-    // TODO: Implementar modal/formulario para agregar categoría
+    const dialogData: CategoryFormData = {
+      mode: 'add',
+      title: 'Nueva Categoría',
+    };
+
+    const dialogRef = this.dialog.open(CategoryFormModalComponent, {
+      width: '600px',
+      maxWidth: '90vw',
+      maxHeight: '90vh',
+      disableClose: true,
+      data: dialogData,
+    });
+
+    dialogRef
+      .afterClosed()
+      .subscribe((result: CategoryFormResult | undefined) => {
+        if (result) {
+          console.log('New category data:', result);
+          // TODO: Llamar al servicio para crear la categoría
+          // this.categoriesService.createCategory(result).subscribe(...)
+          this.loadCategories(); // Recargar datos después de agregar
+        }
+      });
   }
 
   private handleEditCategory(category: Category) {
-    console.log('Edit category action triggered for:', category);
-    // TODO: Implementar modal/formulario para editar categoría
+    const dialogData: CategoryFormData = {
+      mode: 'edit',
+      title: 'Editar Categoría',
+      category: category,
+    };
+
+    const dialogRef = this.dialog.open(CategoryFormModalComponent, {
+      width: '600px',
+      maxWidth: '90vw',
+      maxHeight: '90vh',
+      disableClose: true,
+      data: dialogData,
+    });
+
+    dialogRef
+      .afterClosed()
+      .subscribe((result: CategoryFormResult | undefined) => {
+        if (result) {
+          console.log('Edit category data:', result);
+          // TODO: Llamar al servicio para actualizar la categoría
+          // this.categoriesService.updateCategory(category.id, result).subscribe(...)
+          this.loadCategories(); // Recargar datos después de editar
+        }
+      });
   }
 
   private handleDeleteCategory(category: Category) {
+    // TODO: Implementar modal de confirmación para eliminar
     console.log('Delete category action triggered for:', category);
-    // TODO: Implementar confirmación y eliminación de categoría
+
+    // Por ahora, mostrar un confirm nativo
+    if (
+      confirm(
+        `¿Estás seguro de que quieres eliminar la categoría "${category.name}"?`
+      )
+    ) {
+      // TODO: Implementar eliminación
+      console.log('Confirmed delete for:', category.name);
+    }
   }
 }

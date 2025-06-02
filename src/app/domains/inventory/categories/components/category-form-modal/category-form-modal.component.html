@@ -1,1 +1,84 @@
-<p>category-form-modal works!</p>
+<div>
+  <!-- Header -->
+  <h2 mat-dialog-title class="dialog-title">
+    {{ data.title }}
+  </h2>
+
+  <!-- Content -->
+  <mat-dialog-content class="dialog-content">
+    <form
+      [formGroup]="categoryForm"
+      (ngSubmit)="onSubmit()"
+      class="category-form"
+    >
+      <!-- Nombre Field -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nombre de la categoría</mat-label>
+        <input
+          matInput
+          formControlName="name"
+          placeholder="Ej: Electrónicos"
+          maxlength="100"
+          required
+        />
+        <mat-icon matSuffix>label</mat-icon>
+        <mat-hint align="end"
+          >{{ nameControl?.value?.length || 0 }}/100</mat-hint
+        >
+        @if (nameControl?.invalid && nameControl?.touched) {
+        <mat-error>{{ getNameErrorMessage() }}</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Descripción Field -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Descripción</mat-label>
+        <textarea
+          matInput
+          formControlName="description"
+          placeholder="Describe brevemente esta categoría..."
+          rows="4"
+          maxlength="500"
+          required
+        >
+        </textarea>
+        <mat-icon matSuffix>description</mat-icon>
+        <mat-hint align="end"
+          >{{ descriptionControl?.value?.length || 0 }}/500</mat-hint
+        >
+        @if (descriptionControl?.invalid && descriptionControl?.touched) {
+        <mat-error>{{ getDescriptionErrorMessage() }}</mat-error>
+        }
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+
+  <!-- Actions -->
+  <mat-dialog-actions class="dialog-actions" align="end">
+    <button
+      mat-button
+      type="button"
+      (click)="onCancel()"
+      [disabled]="loading()"
+    >
+      <mat-icon>close</mat-icon>
+      Cancelar
+    </button>
+
+    <button
+      matButton="elevated"
+      color="primary"
+      type="submit"
+      (click)="onSubmit()"
+      [disabled]="categoryForm.invalid || loading()"
+    >
+      @if (loading()) {
+      <mat-icon>refresh</mat-icon>
+      } @else {
+      <mat-icon>{{ data.mode === "add" ? "add" : "save" }}</mat-icon>
+      } @if (loading()) { Guardando... } @else {
+      {{ data.mode === "add" ? "Crear" : "Guardar" }}
+      }
+    </button>
+  </mat-dialog-actions>
+</div>

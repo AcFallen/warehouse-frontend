@@ -1,0 +1,163 @@
+/* Header Styles */
+.dialog-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 24px 24px 16px 24px;
+  color: var(--mat-sys-on-surface);
+  font-size: 1.5rem;
+  font-weight: 500;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+/* Content Styles */
+.dialog-content {
+  flex: 1;
+  padding: 24px !important;
+  overflow-y: auto;
+}
+
+.category-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 100%;
+}
+
+/* Form Field Styles */
+.full-width {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  .mat-mdc-form-field-subscript-wrapper {
+    margin-top: 8px;
+  }
+}
+
+/* Actions Styles */
+.dialog-actions {
+  padding: 16px 24px 24px 24px;
+  gap: 12px;
+  border-top: 1px solid var(--mat-sys-outline-variant);
+  background-color: var(--mat-sys-surface);
+}
+
+.dialog-actions button {
+  min-width: 100px;
+}
+
+/* Loading Animation */
+.loading-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Form Validation Styles */
+.mat-mdc-form-field.mat-form-field-invalid {
+  .mat-mdc-text-field-wrapper {
+    .mat-mdc-form-field-flex {
+      .mat-mdc-form-field-outline {
+        .mat-mdc-form-field-outline-thick {
+          border-color: var(--mat-sys-error);
+        }
+      }
+    }
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .category-form-modal {
+    max-height: 95vh;
+  }
+
+  .dialog-title {
+    padding: 16px 16px 12px 16px;
+    font-size: 1.3rem;
+  }
+
+  .title-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .dialog-content {
+    padding: 16px;
+  }
+
+  .category-form {
+    gap: 16px;
+  }
+
+  .dialog-actions {
+    padding: 12px 16px 16px 16px;
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .dialog-actions button {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .dialog-title {
+    padding: 12px 12px 8px 12px;
+    font-size: 1.2rem;
+  }
+
+  .dialog-content {
+    padding: 12px;
+  }
+
+  .category-form {
+    gap: 12px;
+  }
+
+  .dialog-actions {
+    padding: 8px 12px 12px 12px;
+  }
+}
+
+/* Enhanced Focus States */
+.mat-mdc-button:focus,
+.mat-mdc-raised-button:focus {
+  outline: 2px solid var(--mat-sys-primary);
+  outline-offset: 2px;
+}
+
+/* Accessibility Improvements */
+.mat-mdc-form-field-error {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Custom Scrollbar for Content */
+.dialog-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dialog-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dialog-content::-webkit-scrollbar-thumb {
+  background-color: var(--mat-sys-outline-variant);
+  border-radius: 3px;
+}
+
+.dialog-content::-webkit-scrollbar-thumb:hover {
+  background-color: var(--mat-sys-outline);
+}
