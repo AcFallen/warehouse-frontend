@@ -2,44 +2,15 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
-export interface Category {
-  id: string; // UUID string, no number
-  name: string;
-  description: string;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface Pagination {
-  page: string;
-  limit: string;
-  total: number;
-  totalPages: number;
-  hasNext: boolean;
-  hasPrev: boolean;
-}
-
-export interface CategoriesResponse {
-  success: boolean;
-  data: Category[];
-  message: string;
-  pagination: Pagination;
-}
-
-export interface ApiError {
-  success: false;
-  message: string;
-  error?: string;
-}
+import { environment } from '../../../../../environments/environment';
+import { CategoriesResponse } from '../types/api-response.type';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoriesService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:7000'; // TODO: Move to environment
+  private readonly apiUrl = environment.apiUrl; // TODO: Move to environment
 
   getCategories(
     page: number = 1,

@@ -7,8 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { CategoriesService, Category } from '../../services/categories.service';
+import { CategoriesService } from '../../services/categories.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Category } from '../../models/category.model';
 
 @Component({
   selector: 'app-categories-table',
