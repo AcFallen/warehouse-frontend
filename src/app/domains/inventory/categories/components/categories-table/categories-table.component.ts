@@ -8,6 +8,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CategoriesService, Category } from '../../services/categories.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-categories-table',
@@ -21,6 +22,7 @@ import { CategoriesService, Category } from '../../services/categories.service';
     MatChipsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatTooltipModule,
   ],
   templateUrl: './categories-table.component.html',
   styleUrls: ['./categories-table.component.scss'],

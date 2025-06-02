@@ -5,7 +5,7 @@ import { DashboardComponent } from './domains/dashboard/dashboard.component';
 import { WarehouseListComponent } from './domains/warehouses/pages/warehouse-list/warehouse-list.component';
 import { InventoryReportsComponent } from './domains/reports/pages/inventory-reports/inventory-reports.component';
 import { ProductListComponent } from './domains/inventory/products/pages/product-list/product-list.component';
-import { CategoryListComponent } from './domains/inventory/categories/category-list/category-list.component';
+import { CategoriesTableComponent } from './domains/inventory/categories/components/categories-table/categories-table.component';
 
 export const routes: Routes = [
   {
@@ -31,7 +31,7 @@ export const routes: Routes = [
       },
       {
         path: 'categories',
-        component: CategoryListComponent,
+        component: CategoriesTableComponent,
       },
       {
         path: 'movements',

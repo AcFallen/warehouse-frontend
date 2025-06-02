@@ -1,7 +1,7 @@
-<div class="table-container">
+<div>
   <div class="table-header">
     <h2>Categorías</h2>
-    <button mat-raised-button color="primary">
+    <button mat-raised-button>
       <mat-icon>add</mat-icon>
       Nueva Categoría
     </button>
@@ -75,14 +75,16 @@
           <button
             mat-icon-button
             color="primary"
-            [title]="'Editar ' + element.name"
+            matTooltip="Editar categoría"
+            [matTooltipPosition]="'above'"
           >
             <mat-icon>edit</mat-icon>
           </button>
           <button
             mat-icon-button
             color="warn"
-            [title]="'Eliminar ' + element.name"
+            matTooltip="Eliminar categoría"
+            [matTooltipPosition]="'above'"
           >
             <mat-icon>delete</mat-icon>
           </button>
