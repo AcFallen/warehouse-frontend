@@ -6,6 +6,7 @@ import { WarehouseListComponent } from './domains/warehouses/pages/warehouse-lis
 import { InventoryReportsComponent } from './domains/reports/pages/inventory-reports/inventory-reports.component';
 import { ProductListComponent } from './domains/inventory/products/pages/product-list/product-list.component';
 import { CategoriesTableComponent } from './domains/inventory/categories/components/categories-table/categories-table.component';
+import { CategoriesPageComponent } from './domains/inventory/categories/pages/categories-page/categories-page.component';
 
 export const routes: Routes = [
   {
@@ -31,7 +32,7 @@ export const routes: Routes = [
       },
       {
         path: 'categories',
-        component: CategoriesTableComponent,
+        component: CategoriesPageComponent,
       },
       {
         path: 'movements',

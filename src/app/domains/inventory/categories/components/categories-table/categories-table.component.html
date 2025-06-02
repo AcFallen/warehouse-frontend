@@ -1,7 +1,7 @@
 <div>
   <div class="table-header">
     <h2>Categorías</h2>
-    <button mat-raised-button>
+    <button mat-raised-button (click)="onAddCategory()">
       <mat-icon>add</mat-icon>
       Nueva Categoría
     </button>
@@ -77,6 +77,7 @@
             color="primary"
             matTooltip="Editar categoría"
             [matTooltipPosition]="'above'"
+            (click)="onEditCategory(element)"
           >
             <mat-icon>edit</mat-icon>
           </button>
@@ -85,6 +86,7 @@
             color="warn"
             matTooltip="Eliminar categoría"
             [matTooltipPosition]="'above'"
+            (click)="onDeleteCategory(element)"
           >
             <mat-icon>delete</mat-icon>
           </button>
@@ -105,9 +107,7 @@
         }}</strong
         >"
       </p>
-      <button matButton="elevated" (click)="clearFilter()">
-        Limpiar filtro
-      </button>
+      <button matButton="elevated" (click)="clearFilter()">Limpiar filtro</button>
     </div>
     }
   </div>
@@ -116,7 +116,7 @@
   <mat-paginator
     [length]="totalItems()"
     [pageSize]="pageSize()"
-    [pageSizeOptions]="[2, 10, 20, 50]"
+    [pageSizeOptions]="[5, 10, 20, 50]"
     (page)="onPageChange($event)"
     showFirstLastButtons
   >

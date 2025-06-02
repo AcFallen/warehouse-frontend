@@ -1,0 +1,13 @@
+<app-categories-table
+  [dataSource]="dataSource()"
+  [loading]="loading()"
+  [error]="error()"
+  [totalItems]="totalItems()"
+  [currentPage]="currentPage()"
+  [pageSize]="pageSize()"
+  [filterValue]="filterValue()"
+  (filterChange)="onFilterChange($event)"
+  (filterClear)="onFilterClear()"
+  (pageChange)="onPageChange($event)"
+  (actionEvent)="onActionEvent($event)"
+/>
